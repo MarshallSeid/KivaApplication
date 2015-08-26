@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/home');
 var users = require('./routes/users');
 var calculator = require('./routes/calculator');
+var feed = require('./routes/feed');
 var posts = require('./routes/posts');
 
 
