@@ -1,5 +1,5 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start', '--reload' ]
 2 info using npm@2.11.3
 3 info using node@v0.12.7
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
@@ -16,9 +16,9 @@
 9 verbose stack     at maybeClose (child_process.js:1015:16)
 9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
 10 verbose pkgid kiva2@0.0.0
-11 verbose cwd /Users/Hung/Desktop/KivaApplication
-12 error Darwin 14.4.0
-13 error argv "node" "/usr/local/bin/npm" "start"
+11 verbose cwd /Users/Marchness/Desktop/KivaApp
+12 error Darwin 14.1.0
+13 error argv "node" "/usr/local/bin/npm" "start" "--reload"
 14 error node v0.12.7
 15 error npm  v2.11.3
 16 error code ELIFECYCLE
