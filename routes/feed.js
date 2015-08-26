@@ -4,14 +4,21 @@ var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	getNewestLoans(20, function(err, response, data){
-		console.log("RESPONSE: " + response);
-		console.log("DATA: " + data);
+	getNewestLoans(20, function(err, response, data){ 
+		//console.log("RESPONSE: " + response);
+		//console.log("DATA: " + data);
 	  if (response.statusCode != 200) {
 	 		console.log("ERROR RETURNED");
 	 		return;
  		}
-  res.render('feed', { title: 'Kiva Impact Feed', body: response})
+  var obj = JSON.parse( data );
+  var loans = obj["loans"];
+  var names =[];
+  for(i = 0; i < loans.length; i++) {
+          names.push(loans[i]["name"]);    
+       }
+  console.log("NAMES: " + names);	
+  res.render('feed', { title: 'Kiva Impact Feed', body: names})
 })});
 
 
