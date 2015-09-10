@@ -1,0 +1,9 @@
+Points of Confusion: Callbacks, Utilization of Routes - Express, usage of app.js vs external js files/Routes, Difference between res.render and res.send, using request.get
+
+I have a function that is querying the KVIA Api getting the Person/Group's Name, Country and other information. I want to use each country to query another API - right now I'm attempting it all in the same for loop where I get the country - then immediately try to pass it into the other api. Can you give me some guidance on using callbacks here? It Or should I go with an alternate approach where I hold the array outside of the functions so I can access all the countries after the fact? 
+
+Idea of Application: Provide user with a seemingly twitter feed of most recent loans that will output the HDI Rank (Kenya is ranked 5th in needing help with Gender Inequality Issues)
+- Variations that could be useful for KIVA: Impact by category 
+
+APIS: Kiva API, HDI API
+
