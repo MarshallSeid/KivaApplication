@@ -41,7 +41,7 @@ for i in range(1,num_pages+1):
 # for loop to avg all sums
 for country in countries:
 	num_loans = countries[country]["num_loans"]
-	countries[country]["loan_avg"] /= float(num_loans)
+	countries[country]["loan_avg"] /= float(num_pagesm_loans)
 	countries[country]["desc_avg"] /= float(num_loans)
 	countries[country]["tags_avg"] /= float(num_loans)
 	countries[country]["use_avg"] /= float(num_loans)
@@ -49,7 +49,7 @@ for country in countries:
 
 #print countries' loan avg
 for country in countries:
-	print ("loan average length for " + country + ": " + str(countries[country]["loan_avg"]))
+	print ("loan average for " + country + ": " + str(countries[country]["loan_avg"]))
 
 #print countries' desc avg
 for country in countries:

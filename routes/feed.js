@@ -91,7 +91,7 @@ function getNewestLoans(numOfResults, callback) {
 
 module.exports = router;
 
-
+// Automatic Donations 
 //Gender Impact (Dependenent on Gender and what the HDI ratings is )
 //Environment Impact (Dependent on Sector?)
 
