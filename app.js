@@ -11,6 +11,7 @@ var calculator = require('./routes/calculator');
 var feed = require('./routes/feed');
 var posts = require('./routes/posts');
 var feed = require('./routes/feed');
+var map = require('./routes/map');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/users', users);
 app.use('/calculator', calculator);
 app.use('/posts', posts);
 app.use('/feed', feed);
+app.use('/map', map);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
