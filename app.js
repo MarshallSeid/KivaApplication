@@ -33,7 +33,6 @@ app.use('/calculator', calculator);
 app.use('/posts', posts);
 app.use('/feed', feed);
 app.use('/map', map);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
