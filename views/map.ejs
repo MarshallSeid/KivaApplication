@@ -1,0 +1,80 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <title>Google Maps Multiple Markers</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+</head>
+<body>
+  <div id="map" style="height: 100%; width: 100%;">
+</div>
+<script type="text/javascript">
+    var coord = [];
+    function query(callback){
+      var per_page = 500;
+      for(var i = 1; i < 13; i++){
+        $.ajax({
+            type: "GET",
+            url: "http://api.kivaws.org/v1/loans/newest.json?per_page=500&page=" + i,
+            success: function(response, data) {
+              //run the code here that needs to access the data returned
+              console.log("Query success");
+              for(var i = 0; i < response["loans"].length; i++){
+                //console.log(response["loans"][i]["id"]);
+                var array = [];
+                array.push(response["loans"][i]["use"] + '\n Click <a href="https://www.kiva.org/lend/' + (response["loans"][i]["id"]).toString() + '">here</a> to go to Kiva');
+                var pairs = (response["loans"][i]["location"]["geo"]["pairs"].split(" "));
+                array.push(parseFloat(pairs[0]));
+                array.push(parseFloat(pairs[1]));
+                coord.push(array);
+              }
+              callback(null, coord);
+            },
+            error: function(response, data){
+              console.log("Query error");
+              callback(data);
+            },
+        });
+      }
+    };
+    
+    var obj = query(postData);
+
+    function postData(err, data){
+      var locations = data;
+     
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 3,
+        center: new google.maps.LatLng(20.303418, -5.976562),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      var infowindow = new google.maps.InfoWindow();
+      var markers = [];
+      var marker, i;
+
+      for (i = 0; i < locations.length; i++) { 
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+          map: map
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(locations[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+        markers.push(marker);
+      }
+      var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'});
+      }
+    
+  </script>
+  </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+
+</body>
+</html>
