@@ -22,7 +22,7 @@
               for(var i = 0; i < response["loans"].length; i++){
                 //console.log(response["loans"][i]["id"]);
                 var array = [];
-                array.push(response["loans"][i]["use"] + '\n Click <a href="https://www.kiva.org/lend/' + (response["loans"][i]["id"]).toString() + '">here</a> to go to Kiva');
+                array.push(response["loans"][i]["use"] + '<br> Click <a href="https://www.kiva.org/lend/' + (response["loans"][i]["id"]).toString() + '">here</a> to go to Kiva');
                 var pairs = (response["loans"][i]["location"]["geo"]["pairs"].split(" "));
                 array.push(parseFloat(pairs[0]));
                 array.push(parseFloat(pairs[1]));
