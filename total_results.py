@@ -6,7 +6,6 @@ from math import ceil
 
 per_page = 500
 num_pages = 0
-loan_avg = 0
 
 data = { 
 	"funded": {
@@ -49,66 +48,69 @@ data = {
 
 averages = {
 	"sectors": {
-		 "Agriculture": {
+		"Agriculture": {
 		 	"avg_funded": 0.0,
 			 "num_loans": 0.0,
 			 "total_funds": 0.0},
-		 "Arts":{
+		"Arts": {
 			 "avg_funded": 0.0,
 			 "num_loans": 0.0,
 			 "total_funds": 0.0}, 
-		 "Clothing":{
-			 "avg_funded": 0.0,
-			 "num_loans": 0.0,
-			 "total_funds": 0.0}, 
-		 "Construction":{
-		 	"avg_funded": 0.0,
-			 "num_loans": 0.0,
-			 "total_funds": 0.0}, 
-		 "Education":{
-		 	"avg_funded": 0.0,
-			 "num_loans": 0.0,
-			 "total_funds": 0.0}, 
-		 "Entertainment":{
+		"Clothing": {
+			"avg_funded": 0.0,
+			"num_loans": 0.0,
+			"total_funds": 0.0}, 
+		"Construction": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Food":{
+		"Education": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Health":{
+		 "Entertainment": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Housing":{
+		 "Food": {
+		 	"avg_funded": 0.0,
+			"num_loans": 0.0,
+			"total_funds": 0.0}, 
+		 "Health": {
+		 	"avg_funded": 0.0,
+			"num_loans": 0.0,
+			"total_funds": 0.0}, 
+		 "Housing": {
 			"avg_funded": 0.0,	
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Manufacturing":{
+		 "Manufacturing": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Personal Use":{
+		 "Personal Use": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Retail":{
+		 "Retail": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Services":{
+		 "Services": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Transportation":{
+		 "Transportation": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}, 
-		 "Wholesale":{
+		 "Wholesale": {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}
+	},
+	"activities": {
+
 	},
 	"themes": {		
 		"Green":{
@@ -207,7 +209,7 @@ averages = {
 		 	"avg_funded": 0.0,
 			"num_loans": 0.0,
 			"total_funds": 0.0}
-		} 
+		}  
 	}
 
 req = get("http://api.kivaws.org/v1/loans/search.json?status=funded&per_page=1").content
@@ -216,71 +218,60 @@ num_loans = parsed["paging"]["total"]
 num_pages = int(ceil(num_loans / per_page))
 
 # for loop for each page
-for i in range(1, 10):
+for i in range(1, num_pages):
 	req = get("http://api.kivaws.org/v1/loans/search.json?status=funded&per_page="+str(per_page)+"&page=" + str(i)).content
 	parsed = loads(req)
 	# for loop for each loan
 	for loan in parsed["loans"]:
 		status = loan["status"]
-		if status == "funded":
-			# Increment Countries
-			country  = loan["location"]["country"]
-			loan_amt = loan["funded_amount"]
-			if country not in data[loan["status"]]["countries"]:
-				data[status]["countries"][country] = 1
-			else: 
-				data[status]["countries"][country] += 1
+		# Increment Countries
+		country  = loan["location"]["country"]
+		loan_amt = loan["funded_amount"]
+		if country not in data[loan["status"]]["countries"]:
+			data[status]["countries"][country] = 1
+		else: 
+			data[status]["countries"][country] += 1
 
-			# Increment sector funded
-			sector = loan["sector"]
-			if sector not in data[status]["sector"]:
-				data[status]["sector"][sector] = 1
-				averages["sectors"][sector]["num_loans"] = 1
-			else: 
-				data[status]["sector"][sector] += 1
-				averages["sectors"][sector]["num_loans"] += 1
+		# Update sector fields 
+		sector = loan["sector"]
+		if sector not in data[status]["sector"]:
+			data[status]["sector"][sector] = 1
+			averages["sectors"][sector]["num_loans"] = 1
+		else: 
+			data[status]["sector"][sector] += 1
+			averages["sectors"][sector]["num_loans"] += 1
+		# Find averages of sector  
+		averages["sectors"][sector]["total_funds"] += loan_amt
+		averages["sectors"][sector]["avg_funded"] = averages["sectors"][sector]["total_funds"] / averages["sectors"][sector]["num_loans"]
 
-			# Increment theme funded
-			if "themes" in loan:
-				for theme in loan["themes"]:
-					if theme not in data[loan["status"]]["themes"]:
-						data[status]["themes"][theme] = 1
-						averages["themes"][theme]["num_loans"] = 1
-					else: 
-						data[status]["themes"][theme] += 1
-						averages["themes"][theme]["num_loans"] += 1
+		# Increment theme field
+		if "themes" in loan:
+			for theme in loan["themes"]:
+				if theme not in data[loan["status"]]["themes"]:
+					data[status]["themes"][theme] = 1
+					averages["themes"][theme]["num_loans"] = 1
 
-			# Increment activity funded
-			if loan["activity"] not in data[status]["activity"]:
-				data[status]["activity"][loan["activity"]] = 1
-			else: 
-				data[status]["activity"][loan["activity"]] += 1
-				averages["sectors"][sector]["total_funds"] += loan_amt
+				else: 
+					data[status]["themes"][theme] += 1
+					averages["themes"][theme]["num_loans"] += 1
 				averages["themes"][theme]["total_funds"] += loan_amt
-			data[status]["num_loans"] += 1
-			data["total"]["num_loans"] += 1
+				averages["themes"][theme]["avg_funded"] = averages["themes"][theme]["total_funds"] / averages["themes"][theme]["num_loans"]
 		
-#for activity in data["funded"]["activity"]:
-for sector in averages["sectors"]:
-	sector["avg_funded"] = sector["total_funds"] / sector["num_loans"]
-for theme in averages["themes"]:
-	theme["avg_funded"] = theme["total_funds"] / theme["num_loans"]
+		# Increment activity field
+		activity = loan["activity"]
+		if activity not in data[status]["activity"]:
+			data[status]["activity"][activity] = 1
+			averages["activities"][activity] = {
+			"avg_funded": loan_amt, "num_loans": 1, "total_funds": loan_amt
+			}
+		else: 
+			data[status]["activity"][loan["activity"]] += 1
+			averages["activities"][activity]["total_funds"] += loan_amt
+			averages["activities"][activity]["num_loans"] += 1
+			averages["activities"][activity]["avg_funded"] = averages["activities"][activity]["total_funds"] / averages["activities"][activity]["num_loans"]
 
 # Update the Funded Campaigns/Total Campaigns
 with open('data.txt', 'w') as outfile:
 	json.dump(data, outfile)
 with open('averages.txt', 'w') as outfile:
 	json.dump(averages, outfile)
-
-# for name in data["funded"]["tag"]:
-# 	if data["funded"]["tag"][name] > 10:
-# 		data["funded"]["tag"][name] = (data["funded"]["tag"][name] / data[totals][name]) * 100
-# 		print ("Tag: " + name + " - " + str(loans["funded"]["tag"][name]))
-
-# for status in loans:
-# 	num_loans = loans[status]["num_loans"]
-# 	loans[status]["loan_avg"] /= num_loans
-# 	print ("loan average amount for " + status + ": " + str(loans[status]["loan_avg"]))
-# 	print ("desc average length for " + status + ": " + str(loans[status]["desc_avg"]))
-# 	print ("use average length for " + status + ": " + str(loans[status]["use_avg"]))
-# 	print ("tag average length for " + status + ": " + str(loans[status]["tags_avg"]))
