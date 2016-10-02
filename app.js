@@ -10,9 +10,9 @@ var users = require('./routes/users');
 var calculator = require('./routes/calculator');
 var feed = require('./routes/feed');
 var posts = require('./routes/posts');
-var feed = require('./routes/feed');
 var borrower = require('./routes/borrower');
 var map = require('./routes/map');
+var us = require('./routes/us');
 
 var app = express();
 
@@ -35,6 +35,7 @@ app.use('/posts', posts);
 app.use('/feed', feed);
 app.use('/borrower', borrower);
 app.use('/map', map);
+app.use('/us', us);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,128 @@
+<html>
+<head>
+  <title>US Loan Analysis</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <div id="waiting">Calculating Averages. Please wait a moment :)</div>
+        <div id="table">
+          <table class='table table-hover text-center'><thead><tr>
+            <th class='text-center'>Status</th>
+            <th class='text-center'>Loan Amount Average</th>
+            <th class='text-center'>Use Length Average</th>
+            <th class='text-center'>Language Options Average</th>
+            <th class='text-center'>Tags Average</th>
+            </tr></thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+</div>
+<script type="text/javascript">
+    var fundraising = {
+      "loan_avg": 0.0,
+      "use_avg": 0.0,
+      "desc_avg": 0.0,
+      "tags_avg": 0.0,
+      "num_loans": 0.0,
+    }
+
+    var funded = {
+      "loan_avg": 0.0,
+      "use_avg": 0.0,
+      "desc_avg": 0.0,
+      "tags_avg": 0.0,
+      "num_loans": 0.0,
+    }
+
+    var expired = {
+      "loan_avg": 0.0,
+      "use_avg": 0.0,
+      "desc_avg": 0.0,
+      "tags_avg": 0.0,
+      "num_loans": 0.0,
+    }
+
+    function add(status, loan) {
+      status["loan_avg"] += loan["loan_amount"];
+      status["desc_avg"] += loan["description"]["languages"].length;
+      status["tags_avg"] += loan["tags"].length;
+      status["use_avg"] += loan["use"].length;
+      status["num_loans"] += 1;
+    }
+
+    function avg(status) {
+      status["loan_avg"] /= status["num_loans"];
+      status["use_avg"] /= status["num_loans"];
+      status["desc_avg"] /= status["num_loans"];
+      status["tags_loan"] /= status["num_loans"];
+    }
+
+    function query(callback){
+      var request = 0;
+      for(var i = 1; i < 13; i++){
+        $.ajax({
+            type: "GET",
+            url: "http://api.kivaws.org/v1/loans/search.json?country_code=US&per_page=500&page=" + i,
+            success: function(response, data) {
+              // calculate avg for each status type
+              response["loans"].forEach(function(loan) {
+                if (loan["status"] === "funded") {
+                  add(funded, loan);
+                } else if (loan["status"] === "fundraising") {
+                  add(fundraising, loan);
+                } else if (loan["status"] === "expired") {
+                  add(expired, loan);
+                }
+              })
+              request++
+              if (request == 12) {
+                callback(fundraising, funded, expired);
+              }
+            },
+            error: function(response, data){
+              console.log("Query error");
+            },
+        });
+      }
+    };
+
+    var obj = query(postData);
+
+    function postData(fundraising, funded, expired) {
+      avg(fundraising);
+      avg(funded);
+      avg(expired);
+
+      var table = "<table class='table table-hover text-center'><thead><tr>";
+      table += "<th class='text-center'>Status</th>";
+      table += "<th class='text-center'>Loan Amount Average</th>";
+      table += "<th class='text-center'>Use Length Average</th>";
+      table += "<th class='text-center'>Language Options Average</th>";
+      table += "<th class='text-center'>Tags Average</th>";
+      table += "</tr></thead><tbody>";
+      table += "<tr><td>Fundraising</td><td>" + fundraising["loan_avg"].toFixed(3) + "</td><td>" + fundraising["use_avg"].toFixed(3) + "</td><td>" + fundraising["desc_avg"].toFixed(3) + "</td><td>" + fundraising["tags_avg"] + "</td></tr>";
+      table += "<tr><td>Funded</td><td>" + funded["loan_avg"].toFixed(3) + "</td><td>" + funded["use_avg"].toFixed(3) + "</td><td>" + funded["desc_avg"].toFixed(3) + "</td><td>" + funded["tags_avg"] + "</td></tr>";
+      table += "<tr><td>Expired</td><td>" + expired["loan_avg"].toFixed(3) + "</td><td>" + expired["use_avg"].toFixed(3) + "</td><td>" + expired["desc_avg"].toFixed(3) + "</td><td>" + expired["tags_avg"] + "</td></tr>";
+      table += "</tbody></table>";
+
+
+      document.getElementById("table").innerHTML = table;
+      document.getElementById("waiting").innerHTML = "";
+    }
+    
+  </script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+</body>
+</html>
