@@ -25,7 +25,7 @@ Currency Exchange Loss
 // Through our data, consider putting more than a 5 word description
 // Filter first by country 
 // What field partner to use? 
-
+// - default rate
 
 * Can get the lenght of a loan repayment, but it'll take 
 
