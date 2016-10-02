@@ -177,9 +177,11 @@ req = get("http://api.kivaws.org/v1/loans/search.json?status=funded&per_page=1")
 parsed = loads(req)
 num_loans = parsed["paging"]["total"]
 num_pages = int(ceil(num_loans / per_page))
-
+print ("Total # of pages: " + str(num_pages))
 # for loop for each page
 for i in range(1, num_pages):
+	if (i % 10 == 0):
+		print("On page: " + str(i) + " out of 2170 pages" )
 	req = get("http://api.kivaws.org/v1/loans/search.json?status=funded&per_page="+str(per_page)+"&page=" + str(i)).content
 	parsed = loads(req)
 	# for loop for each loan

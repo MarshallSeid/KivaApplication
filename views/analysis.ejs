@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>US Loan Analysis</title>
+  <title>Campaign Assistance</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
   <script type="text/javascript" src="javascripts/analysisHandler.js"></script>
@@ -66,56 +66,76 @@
 
   <label>Themes (Check any):</label>
   <form id="theme">
-    <div class="checkbox-inline"> <label><input type="checkbox" value="">Green</label>
+    <div class="checkbox-inline"> <input type="checkbox" value="Green"><label>Green</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value="">Higher Education</label>
+    <div class="checkbox-inline"> <input type="checkbox" value="Higher Education"><label>Higher Education</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Arab Youth</label>
+    <div class="checkbox-inline"> <input type="checkbox" value="Arab Youth"><label>Arab Youth</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Kiva City LA</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Kiva City LA"> <label>Kiva City LA</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Islamic Finance</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Islamic Finance"><label>Islamic Finance</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Youth</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Youth"><label>Youth</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Start-Up</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Start-Up"><label>Start-Up</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Water and Sanitation</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Water and Sanitation"><label>Water and Sanitation</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Vulnerable Groups</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Vulnerable Groups"><label>Vulnerable Groups</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Fair Trade</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Fair Trade"><label>Fair Trade</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Rural Exclusion</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Rural Exclusion"><label>Rural Exclusion</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Mobile Technology</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Mobile Technology"><label>Mobile Technology</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Underfunded Areas</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Underfunded Areas"><label>Underfunded Areas</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Conflict Zones</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Conflict Zones"><label>Conflict Zones</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Job Creation</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Job Creation"><label>Job Creation</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> SME</label>
+    <div class="checkbox-inline"> <input type="checkbox" value="SME"><label>SME</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Growing Businesses</label>
+    <div class="checkbox-inline"> <input type="checkbox" value="Growing Businesses"><label>Growing Businesses</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Kiva City Detroit</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Kiva City Detroit"><label>Kiva City Detroit</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Health</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Health"><label>Health</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Disaster recovery</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Disaster recovery"><label>Disaster recovery</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Flexible Credit Study</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Flexible Credit Study"><label>Flexible Credit Study</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Innovative Loans</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Innovative Loans"><label>Innovative Loans</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> IPA Study</label>
+    <div class="checkbox-inline"><input type="checkbox" value="IPA Study"><label>IPA Study</label>
     </div>
-    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Refugees/Displaced</label>
+    <div class="checkbox-inline"><input type="checkbox" value="Refugees/Displaced"><label>Refugees/Displaced</label>
     </div>
   </form>
   <button type="button" id="submit" class="btn btn-success">Submit</button>
+  <br><br>
+  <h3> Advice <small>Let us give you some advice!</small></h3>
+    <blockquote>
+    <h3 id="MainBlock"></h3>
+
+     <strong id="Bold">Amount</strong><br>
+    You have a campaign amount of <mark id="InputAmt"></mark> USD <text id="Sector"></text><text id="ThemeList"></text>
+    <br>
+
+    <strong id="Bold">Theme Average</strong><br>
+    The average funded amount of the themes you selected is <mark id="ThemeAvg"></mark> USD.
+    <br>
+  <strong id="Bold">Sector Average</strong><br>
+    The average funded amount of the sector you selected is <mark id="SectorAvg"></mark> USD.
+    <br>
+    <strong id="Bold">Total Average</strong><br>
+    The average funded amount of the sector you selected is <mark id="TotalAvg"></mark> USD.
+    </blockquote>
+    <h4 id="HelpBlock"></h4>
+
 </div>
 
 
