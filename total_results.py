@@ -7,45 +7,6 @@ from math import ceil
 per_page = 500
 num_pages = 0
 
-data = { 
-	"funded": {
-		"total_funds": 0.0,
-		"countries": {},
-		"activity": {},
-		"tag": {},
-		"sector": {},
-		"themes": {},
-		"num_loans": 0.0
-	},
-	"fundraising": {
-		"total_funds": 0.0,
-		"countries": {},
-		"activity": {},
-		"tag": {},
-		"sector": {},
-		"themes": {},
-		"num_loans": 0.0
-	},
-	"expired": {
-		"total_funds": 0.0,
-		"countries": {},
-		"activity": {},
-		"tag": {},
-		"sector": {},
-		"themes": {},
-		"num_loans": 0.0
-	},
-	"total": {
-		"total_funds": 0.0,
-		"countries": {},
-		"activity": {},
-		"tag_funded": {},
-		"sector": {},
-		"themes": {},
-		"num_loans": 0.0
-	}
-}
-
 averages = {
 	"sectors": {
 		"Agriculture": {
@@ -109,8 +70,8 @@ averages = {
 			"num_loans": 0.0,
 			"total_funds": 0.0}
 	},
+	"countries": {},
 	"activities": {
-
 	},
 	"themes": {		
 		"Green":{
@@ -224,54 +185,44 @@ for i in range(1, num_pages):
 	# for loop for each loan
 	for loan in parsed["loans"]:
 		status = loan["status"]
+		loan_amt = loan["funded_amount"]
 		# Increment Countries
 		country  = loan["location"]["country"]
-		loan_amt = loan["funded_amount"]
-		if country not in data[loan["status"]]["countries"]:
-			data[status]["countries"][country] = 1
+		if country not in averages["countries"]:
+			averages["countries"][country] = {
+			"avg_funded": loan_amt, "num_loans": 1, "total_funds": loan_amt
+			}
 		else: 
-			data[status]["countries"][country] += 1
+			averages["countries"][country]["total_funds"] += loan_amt
+			averages["countries"][country]["num_loans"] += 1
+			averages["countries"][country]["avg_funded"] = averages["countries"][country]["total_funds"] / averages["countries"][country]["num_loans"]
 
-		# Update sector fields 
-		sector = loan["sector"]
-		if sector not in data[status]["sector"]:
-			data[status]["sector"][sector] = 1
-			averages["sectors"][sector]["num_loans"] = 1
-		else: 
-			data[status]["sector"][sector] += 1
-			averages["sectors"][sector]["num_loans"] += 1
 		# Find averages of sector  
+		sector = loan["sector"]
+		averages["sectors"][sector]["num_loans"] += 1
 		averages["sectors"][sector]["total_funds"] += loan_amt
 		averages["sectors"][sector]["avg_funded"] = averages["sectors"][sector]["total_funds"] / averages["sectors"][sector]["num_loans"]
 
 		# Increment theme field
 		if "themes" in loan:
 			for theme in loan["themes"]:
-				if theme not in data[loan["status"]]["themes"]:
-					data[status]["themes"][theme] = 1
+				if theme not in averages["themes"]:
 					averages["themes"][theme]["num_loans"] = 1
-
 				else: 
-					data[status]["themes"][theme] += 1
 					averages["themes"][theme]["num_loans"] += 1
 				averages["themes"][theme]["total_funds"] += loan_amt
 				averages["themes"][theme]["avg_funded"] = averages["themes"][theme]["total_funds"] / averages["themes"][theme]["num_loans"]
 		
 		# Increment activity field
 		activity = loan["activity"]
-		if activity not in data[status]["activity"]:
-			data[status]["activity"][activity] = 1
+		if activity not in averages["activities"]:
 			averages["activities"][activity] = {
 			"avg_funded": loan_amt, "num_loans": 1, "total_funds": loan_amt
 			}
 		else: 
-			data[status]["activity"][loan["activity"]] += 1
 			averages["activities"][activity]["total_funds"] += loan_amt
 			averages["activities"][activity]["num_loans"] += 1
 			averages["activities"][activity]["avg_funded"] = averages["activities"][activity]["total_funds"] / averages["activities"][activity]["num_loans"]
 
-# Update the Funded Campaigns/Total Campaigns
-with open('data.txt', 'w') as outfile:
-	json.dump(data, outfile)
 with open('averages.txt', 'w') as outfile:
 	json.dump(averages, outfile)
