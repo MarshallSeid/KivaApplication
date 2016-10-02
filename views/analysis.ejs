@@ -1,0 +1,141 @@
+<html>
+<head>
+  <title>US Loan Analysis</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav role="navigation" class="navbar navbar-default">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand">💩Kivimpact</a>
+    </div>
+    <!-- Collection of nav links and other content for toggling -->
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="http://kiva.herokuapp.com/#about">About</a></li>
+            <li><a href="http://kiva.herokuapp.com/#services">Services</a></li>
+            <li><a href="http://kiva.herokuapp.com/#works">Borrowers</a></li>
+            <li><a href="/map">Map</a></li>
+            <li><a href="/analysis">Campaign Assistance</a></li>
+            <li><a href="#">US Loans Analysis</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+  <h2>Campaign Assistance</h2>
+  <p>Let us help you have the best chance of getting funded! Based on your campaign plans we'll pull up the average of the theme and sector you intend on raising funds for:</p>  
+   <form>
+    <div class="form-group">
+      <label for="loan_amt">Loan Amount:</label>
+      <input type="number" class="form-control" id="loan_amt">
+    </div>
+  </form>
+<div class="form-group">
+      <label for="sector">Sector (select one):</label>
+      <select class="form-control" id="sector">
+        <option>Agriculture</option>
+        <option>Arts</option>
+        <option>Clothing</option>
+        <option>Construction</option>
+        <option>Education</option>
+        <option>Entertainment</option>
+        <option>Food</option>
+        <option>Health</option>
+        <option>Housing</option>
+        <option>Manufacturing</option>
+        <option>Personal Use</option>
+        <option>Retail</option>
+        <option>Services</option>
+        <option>Transportation</option>
+        <option>Wholesale
+      </select>
+      <br>
+</div>
+
+  <label>Themes (Check any):</label>
+  <form>
+  <div class="checkbox-inline"> <label><input type="checkbox" value="">Green</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value="">Higher Education</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Arab Youth</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Kiva City LA</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Islamic Finance</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Youth</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Start-Up</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Water and Sanitation</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Vulnerable Groups</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Fair Trade</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Rural Exclusion</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Mobile Technology</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Underfunded Areas</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Conflict Zones</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Job Creation</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> SME</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Growing Businesses</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Kiva City Detroit</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Health</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Disaster recovery</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Flexible Credit Study</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Innovative Loans</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> IPA Study</label>
+    </div>
+    <div class="checkbox-inline"> <label><input type="checkbox" value=""> Refugees/Displaced</label>
+    </div>
+  </form>
+  <button type="button" class="btn btn-success">Submit</button>
+</div>
+
+
+
+  <script type="text/javascript">
+    var input_amt = 0
+    var num_themes
+    var theme_amt = Loop through all theme inputs, add all that are added
+    var
+    function activites(activities) {
+      
+    }
+    function sectors(input) {
+      
+    }
+    function theme(input) {
+
+    }
+
+
+    var obj = query(postData);
+
+  </script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/home');
+var analysis = require('./routes/analysis');
 var users = require('./routes/users');
 var calculator = require('./routes/calculator');
 var feed = require('./routes/feed');
@@ -13,6 +14,7 @@ var posts = require('./routes/posts');
 var borrower = require('./routes/borrower');
 var map = require('./routes/map');
 var us = require('./routes/us');
+
 
 var app = express();
 
@@ -36,6 +38,7 @@ app.use('/feed', feed);
 app.use('/borrower', borrower);
 app.use('/map', map);
 app.use('/us', us);
+app.use('/analysis', analysis);
 
 
 // catch 404 and forward to error handler
