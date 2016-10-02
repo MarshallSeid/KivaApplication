@@ -36,14 +36,14 @@ loans = {
 	# Number of funded over total with that tag
 totals = {}
 # get one loan to calculate num_loans and num_pages
-req = get("http://api.kivaws.org/v1/loans/search.json?country_code=US&per_page=1").content
+req = get("http://api.kivaws.org/v1/loans/search.json?per_page=1").content
 parsed = loads(req)
 num_loans = parsed["paging"]["total"]
 num_pages = int(ceil(num_loans / per_page))
 
 # for loop for each page
-for i in range(1,num_pages+1):
-	req = get("http://api.kivaws.org/v1/loans/search.json?country_code=US&per_page="+str(per_page)+"&page=" + str(i)).content
+for i in range(1, 100):
+	req = get("http://api.kivaws.org/v1/loans/search.json?per_page="+str(per_page)+"&page=" + str(i)).content
 	parsed = loads(req)
 	# for loop for each loan
 	for loan in parsed["loans"]:
@@ -63,18 +63,24 @@ for i in range(1,num_pages+1):
 				totals[tag_name] += 1
 			else: 
 				totals[tag_name] = 1.0
-
+#tags_sort = [ (v,k) for k,v in loans["funded"]["tag"][name].iteritems() ]
+#tags_sort.sort(reverse=True)
 for name in loans["funded"]["tag"]:
-	loans["funded"]["tag"][name] = (loans["funded"]["tag"][name] / totals[name]) * 100
-	print ("Tag: " + name + " - " + str(loans["funded"]["tag"][name]))
+	if loans["funded"]["tag"][name] > 10:
+		loans["funded"]["tag"][name] = (loans["funded"]["tag"][name] / totals[name]) * 100
+		print ("Tag: " + name + " - " + str(loans["funded"]["tag"][name]))
+
+#tags_sort = [ (v,k) for k,v in loans["funded"]["tag"][name].iteritems() ]
+#tags_sort.sort(reverse=True)
+#for v,k in tags_sort:
+#	print "%s: %d" % (k,v)
 for status in loans:
 	num_loans = loans[status]["num_loans"]
 	loans[status]["loan_avg"] /= num_loans
 	loans[status]["desc_avg"] /= num_loans
 	loans[status]["tags_avg"] /= num_loans
 	loans[status]["use_avg"] /= num_loans
-	#tags_sort = [ (v,k) for k,v in loans[status]["tag"].iteritems() ]
-#	tags_sort.sort(reverse=True)
+	#
 #	for v,k in tags_sort:
 ##		print "%s: %d" % (k,v)
 	#for tag in loans[status]["tag"]:

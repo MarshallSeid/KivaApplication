@@ -12,15 +12,15 @@
     var coord = [];
     function query(callback){
       var per_page = 500;
-      for(var i = 1; i < 13; i++){
+      var requests = 0;
+      for(var index = 1; index < 13; index++){
         $.ajax({
             type: "GET",
-            url: "http://api.kivaws.org/v1/loans/newest.json?per_page=500&page=" + i,
+            url: "http://api.kivaws.org/v1/loans/newest.json?per_page=500&page=" + index,
             success: function(response, data) {
               //run the code here that needs to access the data returned
               console.log("Query success");
               for(var i = 0; i < response["loans"].length; i++){
-                //console.log(response["loans"][i]["id"]);
                 var array = [];
                 array.push(response["loans"][i]["use"] + '<br> Click <a href="https://www.kiva.org/lend/' + (response["loans"][i]["id"]).toString() + '">here</a> to go to Kiva');
                 var pairs = (response["loans"][i]["location"]["geo"]["pairs"].split(" "));
@@ -28,7 +28,10 @@
                 array.push(parseFloat(pairs[1]));
                 coord.push(array);
               }
-              callback(null, coord);
+              requests++;
+              // same as promises in es6
+              if(requests==12)
+                callback(null, coord);
             },
             error: function(response, data){
               console.log("Query error");
@@ -37,13 +40,17 @@
         });
       }
     };
-    
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 3,
+        center: new google.maps.LatLng(20.303418, -5.976562),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
     var obj = query(postData);
 
     function postData(err, data){
       var locations = data;
-     
-      var map = new google.maps.Map(document.getElementById('map'), {
+      console.log("postData");
+      map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
         center: new google.maps.LatLng(20.303418, -5.976562),
         mapTypeId: google.maps.MapTypeId.ROADMAP
