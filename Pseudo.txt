@@ -7,3 +7,25 @@ Idea of Application: Provide user with a seemingly twitter feed of most recent l
 
 APIS: Kiva API, HDI API
 
+
+--Factors affecting funding--
+Gender
+Interest rate
+Category
+Location
+Loan Amount - Avg of certain countries (Higher amount, less likely to get funded)
+- Avg Annual Income 
+- Total Funds Lent in Congo 
+Posted_date, planned_expiration_date
+Field Partner Risk Rating 
+Currency Exchange Loss
+# of people in group (individual vs community)
+
+
+// Through our data, consider putting more than a 5 word description
+// Filter first by country 
+// What field partner to use? 
+
+
+* Can get the lenght of a loan repayment, but it'll take 
+

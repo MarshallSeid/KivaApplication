@@ -52,15 +52,21 @@ for coord in coords:
 # for loop to avg all sums
 for country in countries:
 	num_loans = countries[country]["num_loans"]
-	countries[country]["loan_avg"] /= float(num_loans)
+	countries[country]["loan_avg"] /= float(num_pagesm_loans)
 	countries[country]["desc_avg"] /= float(num_loans)
 	countries[country]["tags_avg"] /= float(num_loans)
 	countries[country]["use_avg"] /= float(num_loans)
 
 
+<<<<<<< HEAD
+#print countries' loan avg
+for country in countries:
+	print ("loan average for " + country + ": " + str(countries[country]["loan_avg"]))
+=======
 # #print countries' loan avg
 # for country in countries:
 # 	print ("loan average length for " + country + ": " + str(countries[country]["loan_avg"]))
+>>>>>>> 82ff317be0fcd6d5560c1e5dd244cfdc0910c322
 
 # #print countries' desc avg
 # for country in countries:
