@@ -1,0 +1,27 @@
+// Go through all loans
+// At each loan - look at the country, go to the country's hash map 
+// Phillipines, # 
+// US, # -> 
+
+// End up with the information on each country, on each category, amounts
+
+// User inputs their category, country, and amount. Depending on how close it is to the funded
+// Vs how close to the unfunded figures, we return them a % -> probabliity of getting funded
+// If percentage is lower than 66%, show the factors that are much closer to the nonfunded averages
+// and give recommendation to user. 
+
+// Create prototype, that takes in those inputs. And returns the average
+
+
+
+Amount avg in US# 2000
+
+
+Country:
+- US
+Amount:
+- 100000
+Category: 
+
+-----
+Return -> 10% of getting funded 
